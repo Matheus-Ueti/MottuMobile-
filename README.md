@@ -6,97 +6,61 @@ Aplicativo de gestão e mapeamento inteligente de motos para a Mottu, desenvolvi
 
 1. **Navegação entre telas (20 pontos)**
    - Uso da biblioteca React Navigation para gerenciar rotas
-   - 5 rotas navegáveis: Login, Dashboard, CRUD, User e About
+   - 5 rotas navegáveis: Login, Painel, Gestão de Motos, Usuário e Sobre
+   - Nomenclatura de telas e componentes em português
 
 2. **Protótipo visual funcional (30 pontos)**
    - Layout funcional e coerente com o fluxo de uso
    - Design moderno com temas consistentes
    - UI responsiva e amigável
+   - Cores e estilos padronizados
 
 3. **Formulário com manipulação de estado (20 pontos)**
    - Uso de useState e useEffect para controle dos campos
    - Formulários reativos com validação
    - Feedback visual para o usuário (alertas, etc.)
+   - Tipagem forte com TypeScript
 
 4. **Armazenamento local com AsyncStorage (20 pontos)**
    - Persistência de dados entre sessões
    - Armazenamento de perfil de usuário
-   - Armazenamento da lista de motos cadastradas
+   - Armazenamento da lista de motos
    - Opção de "lembrar usuário" no login
 
-5. **Projeto organizado (10 pontos)**
-   - Estrutura de diretórios clara
-   - Código limpo e comentado
-   - Tipagem com TypeScript
+5. **Qualidade de código (10 pontos)**
+   - Código organizado e bem estruturado
+   - Padrões de nomenclatura consistentes
+   - Componentes reutilizáveis
+   - Tipagem adequada com TypeScript
+   - Comentários explicativos em português
+
+## Estrutura do Projeto
+
+- **App.tsx** - Configuração de navegação
+- **screens/**
+  - **TelaLogin.tsx** - Tela de login com opção "lembrar usuário"
+  - **TelaPainel.tsx** - Dashboard com estatísticas e acesso rápido às funcionalidades
+  - **TelaGestaoMotos.tsx** - CRUD completo para gestão de motos
+  - **TelaUsuario.tsx** - Visualização e edição de perfil de usuário
+  - **TelaSobre.tsx** - Informações sobre o aplicativo
+
+## Como Executar
+
+1. Clone o repositório
+2. Instale as dependências: `npm install` ou `yarn install`
+3. Execute o projeto: `npx expo start` ou `yarn start`
+4. Escaneie o QR Code com o aplicativo Expo Go no seu dispositivo ou use um emulador
 
 ## Tecnologias Utilizadas
 
 - React Native
-- Expo
 - TypeScript
 - React Navigation
 - AsyncStorage
-
-## Como executar o projeto
-
-1. Certifique-se de ter o Node.js instalado (versão recomendada: 16.x ou superior)
-2. Instale o Expo CLI: `npm install -g expo-cli`
-3. Clone este repositório
-4. Navegue até a pasta do projeto e execute:
-   ```
-   npm install
-   npx expo start
-   ```
-5. Use o aplicativo Expo Go no seu dispositivo móvel para escanear o QR Code, ou execute em um emulador
-
-## Estrutura de arquivos
-
-```
-├── assets/           # Recursos estáticos (imagens, fontes)
-├── screens/          # Componentes de tela
-│   ├── AboutScreen.tsx
-│   ├── CrudScreen.tsx
-│   ├── DashboardScreen.tsx
-│   ├── LoginScreen.tsx
-│   └── UserScreen.tsx
-├── App.tsx           # Componente principal e configuração de navegação
-├── app.json          # Configurações do Expo
-├── package.json      # Dependências e scripts
-└── tsconfig.json     # Configurações do TypeScript
-```
-
-## Credenciais para teste
-
-O aplicativo não possui autenticação real, você pode usar qualquer usuário e senha para login.
-
-## Funcionalidades por tela
-
-### Login
-- Sistema de login com opção "lembrar usuário"
-- Validação de formulário
-
-### Dashboard
-- Painel de controle com estatísticas
-- Menu de navegação para todas as funcionalidades
-- Exibição de dados personalizados baseados no perfil
-
-### Gestão de Motos (CRUD)
-- Listagem de motos cadastradas
-- Adição, edição e remoção de motos
-- Persistência dos dados entre sessões
-
-### Perfil do Usuário
-- Visualização e edição de perfil
-- Armazenamento local dos dados
-
-### Sobre
-- Informações sobre o aplicativo
-- Detalhes técnicos e versão
+- Expo
 
 ## Desenvolvido por
 
-Nome do Desenvolvedor - RM12345
-
-## Licença
-
-Este projeto está licenciado sob a Licença MIT. 
+Matheus Munuera Ueti- RM557812
+Pedro Gomes - RM 553907
+Luiz Felipe Abreu - RM 555197
