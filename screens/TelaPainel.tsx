@@ -44,24 +44,19 @@ export default function TelaPainel({ navigation }: { navigation: any }) {
       </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        {/* Área de estatísticas */}
+    
         <View style={styles.statsContainer}>
-          {/* Card de motos */}
+ 
           <View style={styles.statCard}>
             <Text style={styles.statValue}>{qtdMotos}</Text>
             <Text style={styles.statLabel}>Motos Cadastradas</Text>
           </View>
-          
-          {/* Card de acessos */}
           <View style={styles.statCard}>
             <Text style={styles.statValue}>3</Text>
             <Text style={styles.statLabel}>Acessos Recentes</Text>
           </View>
         </View>
-        
         <Text style={styles.sectionTitle}>Acesso Rápido</Text>
-        
-        {/* Botão de Perfil */}
         <TouchableOpacity 
           style={[styles.menuCard, styles.userCard]} 
           onPress={() => navigation.navigate('Usuario')}
@@ -74,8 +69,6 @@ export default function TelaPainel({ navigation }: { navigation: any }) {
             <Text style={styles.menuCardDesc}>Veja e edite seus dados pessoais</Text>
           </View>
         </TouchableOpacity>
-        
-        {/* Botão de Gestão de Motos */}
         <TouchableOpacity 
           style={[styles.menuCard, styles.crudCard]} 
           onPress={() => navigation.navigate('GestaoMotos')}
@@ -88,8 +81,6 @@ export default function TelaPainel({ navigation }: { navigation: any }) {
             <Text style={styles.menuCardDesc}>Cadastre, edite ou remova motos</Text>
           </View>
         </TouchableOpacity>
-        
-        {/* Botão Sobre */}
         <TouchableOpacity 
           style={[styles.menuCard, styles.aboutCard]} 
           onPress={() => navigation.navigate('Sobre')}
@@ -102,8 +93,6 @@ export default function TelaPainel({ navigation }: { navigation: any }) {
             <Text style={styles.menuCardDesc}>Informações do app e equipe</Text>
           </View>
         </TouchableOpacity>
-        
-        {/* Botão Sair */}
         <TouchableOpacity 
           style={[styles.menuCard, styles.logoutCard]} 
           onPress={async () => {

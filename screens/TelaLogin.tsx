@@ -21,7 +21,7 @@ export default function TelaLogin({ navigation }: { navigation: any }) {
         setLembrar(true);
       }
     } catch {
-      // ignora
+      
     } finally {
       setCarregando(false);
     }
@@ -83,7 +83,7 @@ export default function TelaLogin({ navigation }: { navigation: any }) {
         </TouchableOpacity>
       </View>
       <View style={estilos.rodape}>
-        <Text style={estilos.textoRodape}>© 2023 Zoog - Todos os direitos reservados</Text>
+        <Text style={estilos.textoRodape}>© 2025 Zoog - Todos os direitos reservados</Text>
       </View>
     </View>
   );

@@ -28,7 +28,7 @@ export default function UserScreen({ navigation }: any) {
       if (jsonValue != null) {
         setProfile(JSON.parse(jsonValue));
       } else {
-        // isso aqui é ficticio
+    
         setProfile({
           nome: 'João Silva',
           email: 'joao@email.com',
@@ -121,7 +121,7 @@ export default function UserScreen({ navigation }: any) {
                 <TouchableOpacity 
                   style={[styles.button, styles.cancelButton]} 
                   onPress={() => {
-                    loadProfile(); // Recarrega os dados originais
+                    loadProfile();
                     setIsEditing(false);
                   }}
                 >

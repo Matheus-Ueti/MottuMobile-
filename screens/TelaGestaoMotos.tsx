@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Interface para tipagem das propriedades de navegação
 interface PropsNavegacao {
   navigation: any;
 }
 
-// Interface para tipagem do objeto Moto
 interface Moto {
   id: number;
   modelo: string;
@@ -27,7 +25,6 @@ export default function TelaGestaoMotos({ navigation }: PropsNavegacao) {
     buscarMotos();
   }, []);
 
-  // Salvar dados no AsyncStorage sempre que "motos" mudar
   useEffect(() => {
     if (!carregando) {
       salvarMotos();

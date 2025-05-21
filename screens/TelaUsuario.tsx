@@ -137,17 +137,17 @@ export default function TelaUsuario({ navigation }: PropsNavegacao) {
         setUsuario(JSON.parse(salvo));
       } else {
         setUsuario({
-          nome: 'João Silva',
-          email: 'joao@email.com',
-          telefone: '(11) 98765-4321',
+          nome: 'Matheus Munuera',
+          email: 'matheusueti@gmail.com',
+          telefone: '(15) 99812-5180',
           cargo: 'Gerente de Frota',
         });
       }
     } catch {
       setUsuario({
-        nome: 'João Silva',
-        email: 'joao@email.com',
-        telefone: '(11) 98765-4321',
+        nome: 'Matheus Munuera',
+        email: 'Matheusueti@email.com',
+        telefone: '(15) 99812-5180',
         cargo: 'Gerente de Frota',
       });
     }
