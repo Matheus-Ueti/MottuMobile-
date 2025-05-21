@@ -1,89 +1,70 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 
-type NavProps = {
-  navigation: any;
-}
+type NavProps = { navigation: any };
 
 export default function TelaSobre({ navigation }: NavProps) {
-  
-  const voltar = () => {
-    navigation.goBack();
-  }
-  
-  // versão do aplicativo - MUDAR AQUI SE ATUALIZAR POR FAVOR
-  const versaoApp = "1.0.0";
-  
-  const getAnoAtual = () => {
-    return new Date().getFullYear();
-  }
-  
-  // lista de recursos
+  const versaoApp = '1.0.0';
+  const anoAtual = new Date().getFullYear();
+
   const recursos = [
-    "Tela de login com funcionalidade de lembrar usuário",
-    "Painel de controle com estatísticas e acesso rápido",
-    "Gestão completa de motos (cadastro, edição e remoção)",
-    "Persistência de dados com AsyncStorage",
-    "Perfil de usuário editável"
+    'Tela de login com lembrar usuário',
+    'Painel com estatísticas e atalhos',
+    'Gestão de motos (cadastro, edição, remoção)',
+    'Dados salvos localmente',
+    'Perfil de usuário editável',
   ];
-  
-  // lista de tecnologias
+
   const tecnologias = [
-    "React Native",
-    "TypeScript",
-    "React Navigation",
-    "AsyncStorage",
-    "Hooks (useState, useEffect)"
+    'React Native',
+    'TypeScript',
+    'React Navigation',
+    'AsyncStorage',
+    'Hooks',
   ];
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sobre o Sistema</Text>
-      
       <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Zoog Mobile</Text>
           <Text style={styles.version}>Versão {versaoApp}</Text>
           <Text style={styles.desc}>
-            Este aplicativo é um protótipo para gestão e mapeamento inteligente de motos nos pátios da Zoog.
+            Este app é um protótipo para gestão e mapeamento inteligente de motos nos pátios da Zoog.
           </Text>
         </View>
-        
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Recursos</Text>
-          {recursos.map((recurso, index) => (
-            <View key={index} style={styles.listItem}>
+          {recursos.map((item, i) => (
+            <View key={i} style={styles.listItem}>
               <Text style={styles.bullet}>•</Text>
-              <Text style={styles.listText}>{recurso}</Text>
+              <Text style={styles.listText}>{item}</Text>
             </View>
           ))}
         </View>
-        
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Tecnologias</Text>
-          {tecnologias.map((tech, index) => (
-            <View key={index} style={styles.listItem}>
+          {tecnologias.map((item, i) => (
+            <View key={i} style={styles.listItem}>
               <Text style={styles.bullet}>•</Text>
-              <Text style={styles.listText}>{tech}</Text>
+              <Text style={styles.listText}>{item}</Text>
             </View>
           ))}
         </View>
-        
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Desenvolvedor</Text>
-          <Text style={styles.devText}>Este aplicativo foi desenvolvido como um projeto para demonstração de habilidades em React Native e gestão de frota para a Zoog.</Text>
-          <Text style={styles.devText}>© {getAnoAtual()} Zoog - Todos os direitos reservados</Text>
+          <Text style={styles.devText}>Projeto para demonstrar habilidades em React Native e gestão de frota para a Zoog.</Text>
+          <Text style={styles.devText}>© {anoAtual} Zoog - Todos os direitos reservados</Text>
         </View>
       </ScrollView>
-      
-      <TouchableOpacity style={styles.backBtn} onPress={voltar}>
+      <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
         <Text style={styles.backBtnText}>Voltar</Text>
       </TouchableOpacity>
     </View>
   );
 }
 
-// estilos
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -164,22 +145,5 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
-  },
-  logoCircle: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
-    backgroundColor: '#8A2BE2',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 16,
-  },
-  button: {
-    width: '100%',
-    height: 44,
-    backgroundColor: '#8A2BE2',
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 }); 

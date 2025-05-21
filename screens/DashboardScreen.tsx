@@ -2,39 +2,34 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function DashboardScreen({ navigation }: any) {
-  const [userName, setUserName] = useState('');
-  const [totalMotos, setTotalMotos] = useState(0);
+export default function DashboardScreen({ navigation }: { navigation: any }) {
+  const [primeiroNome, setPrimeiroNome] = useState('');
+  const [qtdMotos, setQtdMotos] = useState(0);
 
   useEffect(() => {
-    const loadData = async () => {
+    async function carregarInfo() {
       try {
-        // Carregar nome do usuário
-        const profileData = await AsyncStorage.getItem('@user_profile');
-        if (profileData) {
-          const profile = JSON.parse(profileData);
-          setUserName(profile.nome.split(' ')[0]); // Apenas o primeiro nome
+        const perfilSalvo = await AsyncStorage.getItem('@user_profile');
+        if (perfilSalvo) {
+          const perfil = JSON.parse(perfilSalvo);
+          setPrimeiroNome(perfil.nome.split(' ')[0]);
         }
-
-        // Carregar quantidade de motos
-        const motosData = await AsyncStorage.getItem('@motos_data');
-        if (motosData) {
-          const motos = JSON.parse(motosData);
-          setTotalMotos(motos.length);
+        const motosSalvas = await AsyncStorage.getItem('@motos_data');
+        if (motosSalvas) {
+          setQtdMotos(JSON.parse(motosSalvas).length);
         }
-      } catch (e) {
-        // Ignorar erros
+      } catch {
+        // esse nao faz nada se der algum erro 
       }
-    };
-
-    loadData();
+    }
+    carregarInfo();
   }, []);
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.greeting}>
-          {userName ? `Olá, ${userName}!` : 'Bem-vindo!'}
+          {primeiroNome ? `Olá, ${primeiroNome}!` : 'Bem-vindo!'}
         </Text>
         <Text style={styles.title}>Painel de Controle</Text>
       </View>
@@ -42,18 +37,17 @@ export default function DashboardScreen({ navigation }: any) {
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.statsContainer}>
           <View style={styles.statCard}>
-            <Text style={styles.statValue}>{totalMotos}</Text>
+            <Text style={styles.statValue}>{qtdMotos}</Text>
             <Text style={styles.statLabel}>Motos Cadastradas</Text>
           </View>
-          
           <View style={styles.statCard}>
             <Text style={styles.statValue}>3</Text>
             <Text style={styles.statLabel}>Acessos Recentes</Text>
           </View>
         </View>
-        
+
         <Text style={styles.sectionTitle}>Acesso Rápido</Text>
-        
+
         <TouchableOpacity 
           style={[styles.menuCard, styles.userCard]} 
           onPress={() => navigation.navigate('User')}
@@ -63,10 +57,10 @@ export default function DashboardScreen({ navigation }: any) {
           </View>
           <View style={styles.menuCardContent}>
             <Text style={styles.menuCardTitle}>Perfil do Usuário</Text>
-            <Text style={styles.menuCardDesc}>Visualize e edite suas informações pessoais</Text>
+            <Text style={styles.menuCardDesc}>Veja e edite seus dados pessoais</Text>
           </View>
         </TouchableOpacity>
-        
+
         <TouchableOpacity 
           style={[styles.menuCard, styles.crudCard]} 
           onPress={() => navigation.navigate('CRUD')}
@@ -76,10 +70,10 @@ export default function DashboardScreen({ navigation }: any) {
           </View>
           <View style={styles.menuCardContent}>
             <Text style={styles.menuCardTitle}>Gestão de Motos</Text>
-            <Text style={styles.menuCardDesc}>Cadastre, edite e remova motos da frota</Text>
+            <Text style={styles.menuCardDesc}>Cadastre, edite ou remova motos</Text>
           </View>
         </TouchableOpacity>
-        
+
         <TouchableOpacity 
           style={[styles.menuCard, styles.aboutCard]} 
           onPress={() => navigation.navigate('About')}
@@ -89,10 +83,10 @@ export default function DashboardScreen({ navigation }: any) {
           </View>
           <View style={styles.menuCardContent}>
             <Text style={styles.menuCardTitle}>Sobre</Text>
-            <Text style={styles.menuCardDesc}>Informações sobre o aplicativo e desenvolvedores</Text>
+            <Text style={styles.menuCardDesc}>Informações do app e equipe</Text>
           </View>
         </TouchableOpacity>
-        
+
         <TouchableOpacity 
           style={[styles.menuCard, styles.logoutCard]} 
           onPress={() => navigation.replace('Login')}
@@ -102,7 +96,7 @@ export default function DashboardScreen({ navigation }: any) {
           </View>
           <View style={styles.menuCardContent}>
             <Text style={styles.menuCardTitle}>Sair</Text>
-            <Text style={styles.menuCardDesc}>Encerrar a sessão atual</Text>
+            <Text style={styles.menuCardDesc}>Encerrar sessão</Text>
           </View>
         </TouchableOpacity>
       </ScrollView>

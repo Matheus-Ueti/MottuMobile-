@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 
-export default function AboutScreen({ navigation }: any) {
+export default function AboutScreen({ navigation }: { navigation: any }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sobre o Sistema</Text>
@@ -11,58 +11,29 @@ export default function AboutScreen({ navigation }: any) {
           <Text style={styles.cardTitle}>Zoog Mobile</Text>
           <Text style={styles.version}>Versão 1.0.0</Text>
           <Text style={styles.description}>
-            Este aplicativo é um protótipo para gestão e mapeamento inteligente de motos nos pátios da Zoog.
+            Este app é um protótipo para gestão e mapeamento inteligente de motos nos pátios da Zoog.
           </Text>
         </View>
         
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Recursos</Text>
-          <View style={styles.feature}>
-            <Text style={styles.bullet}>•</Text>
-            <Text style={styles.featureText}>Sistema de login com autenticação</Text>
-          </View>
-          <View style={styles.feature}>
-            <Text style={styles.bullet}>•</Text>
-            <Text style={styles.featureText}>Dashboard com acesso a todas as funcionalidades</Text>
-          </View>
-          <View style={styles.feature}>
-            <Text style={styles.bullet}>•</Text>
-            <Text style={styles.featureText}>Cadastro e gestão de motos</Text>
-          </View>
-          <View style={styles.feature}>
-            <Text style={styles.bullet}>•</Text>
-            <Text style={styles.featureText}>Sistema de perfil de usuário</Text>
-          </View>
-          <View style={styles.feature}>
-            <Text style={styles.bullet}>•</Text>
-            <Text style={styles.featureText}>Armazenamento local de dados</Text>
-          </View>
+          <View style={styles.feature}><Text style={styles.bullet}>•</Text><Text style={styles.featureText}>Login com autenticação</Text></View>
+          <View style={styles.feature}><Text style={styles.bullet}>•</Text><Text style={styles.featureText}>Dashboard com acesso rápido</Text></View>
+          <View style={styles.feature}><Text style={styles.bullet}>•</Text><Text style={styles.featureText}>Cadastro e gestão de motos</Text></View>
+          <View style={styles.feature}><Text style={styles.bullet}>•</Text><Text style={styles.featureText}>Perfil de usuário editável</Text></View>
+          <View style={styles.feature}><Text style={styles.bullet}>•</Text><Text style={styles.featureText}>Armazenamento local</Text></View>
         </View>
         
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Tecnologias</Text>
-          <View style={styles.feature}>
-            <Text style={styles.bullet}>•</Text>
-            <Text style={styles.featureText}>React Native + Expo</Text>
-          </View>
-          <View style={styles.feature}>
-            <Text style={styles.bullet}>•</Text>
-            <Text style={styles.featureText}>TypeScript</Text>
-          </View>
-          <View style={styles.feature}>
-            <Text style={styles.bullet}>•</Text>
-            <Text style={styles.featureText}>React Navigation</Text>
-          </View>
-          <View style={styles.feature}>
-            <Text style={styles.bullet}>•</Text>
-            <Text style={styles.featureText}>AsyncStorage</Text>
-          </View>
+          <View style={styles.feature}><Text style={styles.bullet}>•</Text><Text style={styles.featureText}>React Native + Expo</Text></View>
+          <View style={styles.feature}><Text style={styles.bullet}>•</Text><Text style={styles.featureText}>TypeScript</Text></View>
+          <View style={styles.feature}><Text style={styles.bullet}>•</Text><Text style={styles.featureText}>React Navigation</Text></View>
+          <View style={styles.feature}><Text style={styles.bullet}>•</Text><Text style={styles.featureText}>AsyncStorage</Text></View>
         </View>
         
         <View style={styles.logoContainer}>
-          <View style={styles.logoCircle}>
-            <Text style={styles.logoText}>M</Text>
-          </View>
+          <View style={styles.logoCircle}><Text style={styles.logoText}>Z</Text></View>
           <Text style={styles.copyright}>© 2023 Zoog - Todos os direitos reservados</Text>
         </View>
       </ScrollView>

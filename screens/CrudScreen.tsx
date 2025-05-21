@@ -4,56 +4,57 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type Moto = { id: number; modelo: string; placa: string };
 
-export default function CrudScreen({ navigation }: any) {
+export default function CrudScreen({ navigation }: { navigation: any }) {
   const [motos, setMotos] = useState<Moto[]>([]);
   const [modelo, setModelo] = useState('');
   const [placa, setPlaca] = useState('');
   const [editId, setEditId] = useState<number | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [carregando, setCarregando] = useState(true);
 
-  // Carregar dados do AsyncStorage quando a tela é montada
   useEffect(() => {
-    loadMotos();
+    buscarMotos();
   }, []);
 
-  // Salvar dados no AsyncStorage sempre que "motos" mudar
   useEffect(() => {
-    if (!isLoading) {
-      saveMotos();
+    if (!carregando) {
+      salvarMotos();
     }
   }, [motos]);
 
-  const loadMotos = async () => {
+  async function buscarMotos() {
     try {
-      const jsonValue = await AsyncStorage.getItem('@motos_data');
-      if (jsonValue != null) {
-        setMotos(JSON.parse(jsonValue));
+      const salvo = await AsyncStorage.getItem('@motos_data');
+      if (salvo) {
+        setMotos(JSON.parse(salvo));
+      } else {
+        setMotos([
+          { id: 1, modelo: 'Honda CG 160', placa: 'ABC-1234' },
+          { id: 2, modelo: 'Yamaha Factor', placa: 'XYZ-5678' },
+        ]);
       }
-    } catch (e) {
-      // Se ocorrer erro, pelo menos inicia com dados padrão
+    } catch {
       setMotos([
         { id: 1, modelo: 'Honda CG 160', placa: 'ABC-1234' },
         { id: 2, modelo: 'Yamaha Factor', placa: 'XYZ-5678' },
       ]);
     } finally {
-      setIsLoading(false);
+      setCarregando(false);
     }
-  };
+  }
 
-  const saveMotos = async () => {
+  async function salvarMotos() {
     try {
       await AsyncStorage.setItem('@motos_data', JSON.stringify(motos));
-    } catch (e) {
+    } catch {
       Alert.alert('Erro', 'Não foi possível salvar os dados');
     }
-  };
+  }
 
-  const handleAddOrEdit = () => {
+  function adicionarOuEditar() {
     if (!modelo.trim() || !placa.trim()) {
-      Alert.alert('Erro', 'Por favor, preencha todos os campos');
+      Alert.alert('Preencha todos os campos');
       return;
     }
-
     if (editId) {
       setMotos(motos.map(m => m.id === editId ? { ...m, modelo, placa } : m));
       setEditId(null);
@@ -62,18 +63,18 @@ export default function CrudScreen({ navigation }: any) {
     }
     setModelo('');
     setPlaca('');
-  };
+  }
 
-  const handleEdit = (moto: Moto) => {
+  function editar(moto: Moto) {
     setEditId(moto.id);
     setModelo(moto.modelo);
     setPlaca(moto.placa);
-  };
+  }
 
-  const handleDelete = (id: number) => {
+  function excluir(id: number) {
     Alert.alert(
-      'Confirmar exclusão',
-      'Tem certeza que deseja excluir esta moto?',
+      'Excluir moto',
+      'Tem certeza que deseja excluir?',
       [
         { text: 'Cancelar', style: 'cancel' },
         { 
@@ -90,13 +91,13 @@ export default function CrudScreen({ navigation }: any) {
         },
       ]
     );
-  };
+  }
 
-  const handleClear = () => {
+  function limpar() {
     setModelo('');
     setPlaca('');
     setEditId(null);
-  };
+  }
 
   return (
     <View style={styles.container}>
@@ -123,20 +124,19 @@ export default function CrudScreen({ navigation }: any) {
           <View style={styles.formButtons}>
             <TouchableOpacity 
               style={[styles.button, styles.saveButton]} 
-              onPress={handleAddOrEdit}
+              onPress={adicionarOuEditar}
             >
               <Text style={styles.buttonText}>{editId ? 'Salvar' : 'Adicionar'}</Text>
             </TouchableOpacity>
             <TouchableOpacity 
               style={[styles.button, styles.clearButton]} 
-              onPress={handleClear}
+              onPress={limpar}
             >
               <Text style={styles.clearButtonText}>Limpar</Text>
             </TouchableOpacity>
           </View>
         </View>
       </View>
-
       <View style={styles.listContainer}>
         <Text style={styles.listTitle}>Lista de Motos ({motos.length})</Text>
         <FlatList
@@ -149,10 +149,10 @@ export default function CrudScreen({ navigation }: any) {
                 <Text style={styles.itemSubtitle}>{item.placa}</Text>
               </View>
               <View style={styles.actions}>
-                <TouchableOpacity style={styles.editButton} onPress={() => handleEdit(item)}>
+                <TouchableOpacity style={styles.editButton} onPress={() => editar(item)}>
                   <Text style={styles.editButtonText}>Editar</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(item.id)}>
+                <TouchableOpacity style={styles.deleteButton} onPress={() => excluir(item.id)}>
                   <Text style={styles.deleteButtonText}>Excluir</Text>
                 </TouchableOpacity>
               </View>
@@ -166,7 +166,6 @@ export default function CrudScreen({ navigation }: any) {
           }
         />
       </View>
-      
       <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
         <Text style={styles.buttonText}>Voltar</Text>
       </TouchableOpacity>
@@ -275,7 +274,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#F8FFF8',
+    backgroundColor: '#F8F5FF',
     borderRadius: 8,
     borderLeftWidth: 4,
     borderLeftColor: '#8A2BE2',

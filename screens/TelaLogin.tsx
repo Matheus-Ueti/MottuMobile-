@@ -2,66 +2,49 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Switch, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Interface para tipagem das propriedades de navegação
-interface PropsNavegacao {
-  navigation: any;
-}
-
-export default function TelaLogin({ navigation }: PropsNavegacao) {
-  // Estados
+export default function TelaLogin({ navigation }: { navigation: any }) {
   const [usuario, setUsuario] = useState('');
   const [senha, setSenha] = useState('');
   const [lembrar, setLembrar] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [carregando, setCarregando] = useState(true);
 
-  // Carregar dados salvos quando a tela é montada
   useEffect(() => {
-    carregarUsuario();
+    buscarUsuarioSalvo();
   }, []);
 
-  const carregarUsuario = async (): Promise<void> => {
+  async function buscarUsuarioSalvo() {
     try {
-      const nome = await AsyncStorage.getItem('@nome_usuario');
-      const lembrarUsuario = await AsyncStorage.getItem('@lembrar_usuario');
-      
-      if (nome && lembrarUsuario === 'true') {
-        console.log("Usuário encontrado:", nome);
-        setUsuario(nome);
+      const salvo = await AsyncStorage.getItem('@user_name');
+      const lembrarSalvo = await AsyncStorage.getItem('@remember_user');
+      if (salvo && lembrarSalvo === 'true') {
+        setUsuario(salvo);
         setLembrar(true);
       }
-    } catch (e) {
-      console.log("Erro ao carregar usuário:", e);
+    } catch {
+      // ignora
     } finally {
-      setLoading(false);
+      setCarregando(false);
     }
-  };
+  }
 
-  const fazerLogin = async (): Promise<void> => {
-    if (usuario.trim() === '' || senha.trim() === '') {
-      Alert.alert('Erro', 'Por favor, preencha todos os campos');
+  async function fazerLogin() {
+    if (!usuario.trim() || !senha.trim()) {
+      Alert.alert('Preencha todos os campos');
       return;
     }
-
     try {
       if (lembrar) {
-        await AsyncStorage.setItem('@nome_usuario', usuario);
-        await AsyncStorage.setItem('@lembrar_usuario', 'true');
-        console.log("Salvando usuário:", usuario);
+        await AsyncStorage.setItem('@user_name', usuario);
+        await AsyncStorage.setItem('@remember_user', 'true');
       } else {
-        await AsyncStorage.removeItem('@nome_usuario');
-        await AsyncStorage.removeItem('@lembrar_usuario');
+        await AsyncStorage.removeItem('@user_name');
+        await AsyncStorage.removeItem('@remember_user');
       }
-      
       navigation.replace('Painel');
-    } catch (e) {
-      console.error("Erro no login:", e);
-      Alert.alert('Erro', 'Não foi possível salvar as preferências');
+    } catch {
+      Alert.alert('Erro ao salvar preferências');
     }
-  };
-
-  const toggleLembrar = (): void => {
-    setLembrar(!lembrar);
-  };
+  }
 
   return (
     <View style={estilos.container}>
@@ -69,13 +52,12 @@ export default function TelaLogin({ navigation }: PropsNavegacao) {
         <Text style={estilos.titulo}>Zoog</Text>
         <Text style={estilos.subtitulo}>Sistema de Gestão</Text>
       </View>
-      
       <View style={estilos.containerFormulario}>
         <TextInput
           style={estilos.input}
           placeholder="Usuário"
           value={usuario}
-          onChangeText={(texto) => setUsuario(texto)}
+          onChangeText={setUsuario}
           placeholderTextColor="#A9A9A9"
           autoCapitalize="none"
         />
@@ -83,26 +65,23 @@ export default function TelaLogin({ navigation }: PropsNavegacao) {
           style={estilos.input}
           placeholder="Senha"
           value={senha}
-          onChangeText={(texto) => setSenha(texto)}
+          onChangeText={setSenha}
           secureTextEntry
           placeholderTextColor="#A9A9A9"
         />
-        
         <View style={estilos.containerLembrar}>
           <Switch
             value={lembrar}
-            onValueChange={toggleLembrar}
-            trackColor={{ false: '#ccc', true: '#a0e1c0' }}
-            thumbColor={lembrar ? '#00C853' : '#f4f3f4'}
+            onValueChange={setLembrar}
+            trackColor={{ false: '#ccc', true: '#e0c2ff' }}
+            thumbColor={lembrar ? '#8A2BE2' : '#f4f3f4'}
           />
           <Text style={estilos.textoLembrar}>Lembrar usuário</Text>
         </View>
-        
         <TouchableOpacity style={estilos.botao} onPress={fazerLogin}>
           <Text style={estilos.textoBotao}>Entrar</Text>
         </TouchableOpacity>
       </View>
-      
       <View style={estilos.rodape}>
         <Text style={estilos.textoRodape}>© 2023 Zoog - Todos os direitos reservados</Text>
       </View>
@@ -113,7 +92,7 @@ export default function TelaLogin({ navigation }: PropsNavegacao) {
 const estilos = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 24,
@@ -129,7 +108,7 @@ const estilos = StyleSheet.create({
   },
   subtitulo: {
     fontSize: 16,
-    color: '#666',
+    color: '#333',
     marginTop: 8,
   },
   containerFormulario: {
@@ -152,7 +131,7 @@ const estilos = StyleSheet.create({
     paddingHorizontal: 16,
     marginBottom: 16,
     fontSize: 16,
-    color: '#222',
+    color: '#333',
     backgroundColor: '#F8F5FF',
   },
   containerLembrar: {
@@ -162,13 +141,13 @@ const estilos = StyleSheet.create({
   },
   textoLembrar: {
     marginLeft: 8,
-    color: '#666',
+    color: '#333',
     fontSize: 14,
   },
   botao: {
     width: '100%',
     height: 48,
-    backgroundColor: '#00C853',
+    backgroundColor: '#8A2BE2',
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
@@ -182,7 +161,7 @@ const estilos = StyleSheet.create({
     marginBottom: 16, 
   },
   textoRodape: {
-    color: '#999',
+    color: '#333',
     fontSize: 12,
   },
 }); 

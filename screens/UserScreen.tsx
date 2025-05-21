@@ -28,7 +28,7 @@ export default function UserScreen({ navigation }: any) {
       if (jsonValue != null) {
         setProfile(JSON.parse(jsonValue));
       } else {
-        // Dados padrão para demonstração
+        // isso aqui é ficticio
         setProfile({
           nome: 'João Silva',
           email: 'joao@email.com',
@@ -37,7 +37,7 @@ export default function UserScreen({ navigation }: any) {
         });
       }
     } catch (e) {
-      // Em caso de erro, usar dados padrão
+      
       setProfile({
         nome: 'João Silva',
         email: 'joao@email.com',
@@ -48,7 +48,7 @@ export default function UserScreen({ navigation }: any) {
   };
 
   const saveProfile = async () => {
-    // Validação simples
+    
     if (!profile.nome.trim() || !profile.email.trim()) {
       Alert.alert('Erro', 'Nome e email são obrigatórios');
       return;

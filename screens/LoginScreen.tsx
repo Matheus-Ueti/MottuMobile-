@@ -2,56 +2,49 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Switch, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function LoginScreen({ navigation }: any) {
-  const [user, setUser] = useState('');
-  const [pass, setPass] = useState('');
-  const [rememberUser, setRememberUser] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
+export default function LoginScreen({ navigation }: { navigation: any }) {
+  const [usuario, setUsuario] = useState('');
+  const [senha, setSenha] = useState('');
+  const [lembrar, setLembrar] = useState(false);
+  const [carregando, setCarregando] = useState(true);
 
   useEffect(() => {
-    loadSavedUser();
+    carregarUsuarioSalvo();
   }, []);
 
-  const loadSavedUser = async () => {
+  async function carregarUsuarioSalvo() {
     try {
-      const savedUser = await AsyncStorage.getItem('@user_name');
-      const savedRemember = await AsyncStorage.getItem('@remember_user');
-      
-      if (savedUser && savedRemember === 'true') {
-        setUser(savedUser);
-        setRememberUser(true);
+      const salvo = await AsyncStorage.getItem('@user_name');
+      const lembrarSalvo = await AsyncStorage.getItem('@remember_user');
+      if (salvo && lembrarSalvo === 'true') {
+        setUsuario(salvo);
+        setLembrar(true);
       }
-    } catch (e) {
-  
+    } catch {
+      
     } finally {
-      setIsLoading(false);
+      setCarregando(false);
     }
-  };
+  }
 
-  const handleLogin = async () => {
-    if (!user.trim() || !pass.trim()) {
-      Alert.alert('Erro', 'Por favor, preencha todos os campos');
+  async function fazerLogin() {
+    if (!usuario.trim() || !senha.trim()) {
+      Alert.alert('Preencha todos os campos');
       return;
     }
-
     try {
-      // Salvar usuário se "lembrar" estiver ativado
-      if (rememberUser) {
-        await AsyncStorage.setItem('@user_name', user);
+      if (lembrar) {
+        await AsyncStorage.setItem('@user_name', usuario);
         await AsyncStorage.setItem('@remember_user', 'true');
       } else {
-        // Limpar dados salvos se "lembrar" não estiver ativado
         await AsyncStorage.removeItem('@user_name');
         await AsyncStorage.removeItem('@remember_user');
       }
-      
-      // Navegar para o Dashboard
       navigation.replace('Dashboard');
-    } catch (e) {
-      Alert.alert('Erro', 'Não foi possível salvar as preferências');
+    } catch {
+      Alert.alert('Erro ao salvar preferências');
     }
-  };
+  }
 
   return (
     <View style={styles.container}>
@@ -59,40 +52,36 @@ export default function LoginScreen({ navigation }: any) {
         <Text style={styles.title}>Zoog</Text>
         <Text style={styles.subtitle}>Sistema de Gestão</Text>
       </View>
-      
       <View style={styles.formContainer}>
         <TextInput
           style={styles.input}
           placeholder="Usuário"
-          value={user}
-          onChangeText={setUser}
+          value={usuario}
+          onChangeText={setUsuario}
           placeholderTextColor="#A9A9A9"
           autoCapitalize="none"
         />
         <TextInput
           style={styles.input}
           placeholder="Senha"
-          value={pass}
-          onChangeText={setPass}
+          value={senha}
+          onChangeText={setSenha}
           secureTextEntry
           placeholderTextColor="#A9A9A9"
         />
-        
         <View style={styles.rememberContainer}>
           <Switch
-            value={rememberUser}
-            onValueChange={setRememberUser}
+            value={lembrar}
+            onValueChange={setLembrar}
             trackColor={{ false: '#ccc', true: '#e0c2ff' }}
-            thumbColor={rememberUser ? '#8A2BE2' : '#f4f3f4'}
+            thumbColor={lembrar ? '#8A2BE2' : '#f4f3f4'}
           />
           <Text style={styles.rememberText}>Lembrar usuário</Text>
         </View>
-        
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <TouchableOpacity style={styles.button} onPress={fazerLogin}>
           <Text style={styles.buttonText}>Entrar</Text>
         </TouchableOpacity>
       </View>
-      
       <View style={styles.footer}>
         <Text style={styles.footerText}>© 2023 Zoog - Todos os direitos reservados</Text>
       </View>

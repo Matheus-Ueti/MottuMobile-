@@ -6,8 +6,7 @@ interface PropsNavegacao {
   navigation: any;
 }
 
-
-interface PerfilUsuario {
+interface Usuario {
   nome: string;
   email: string;
   telefone: string;
@@ -99,26 +98,6 @@ const styles = StyleSheet.create({
   editButtonText: {
     color: '#8A2BE2',
   },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    padding: 16,
-  },
-  modalContent: {
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 24,
-    width: '100%',
-    maxWidth: 400,
-  },
-  modalTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#8A2BE2',
-    marginBottom: 16,
-  },
   modalButtons: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
@@ -139,123 +118,102 @@ const styles = StyleSheet.create({
 });
 
 export default function TelaUsuario({ navigation }: PropsNavegacao) {
-  // Estados
-  const [estaEditando, setEstaEditando] = useState(false);
-  const [perfil, setPerfil] = useState<PerfilUsuario>({
+  const [editando, setEditando] = useState(false);
+  const [usuario, setUsuario] = useState<Usuario>({
     nome: '',
     email: '',
     telefone: '',
     cargo: '',
   });
 
-  // Carregar perfil ao montar o componente
   useEffect(() => {
-    carregarPerfil();
+    buscarPerfil();
   }, []);
 
-  const carregarPerfil = async (): Promise<void> => {
+  async function buscarPerfil() {
     try {
-      const valorJson = await AsyncStorage.getItem('@perfil_usuario');
-      if (valorJson != null) {
-        setPerfil(JSON.parse(valorJson));
+      const salvo = await AsyncStorage.getItem('@perfil_usuario');
+      if (salvo) {
+        setUsuario(JSON.parse(salvo));
       } else {
-        // Dados padrão para demonstração
-        setPerfil({
+        setUsuario({
           nome: 'João Silva',
           email: 'joao@email.com',
           telefone: '(11) 98765-4321',
           cargo: 'Gerente de Frota',
         });
       }
-    } catch (erro) {
-      // Em caso de erro, usar dados padrão
-      setPerfil({
+    } catch {
+      setUsuario({
         nome: 'João Silva',
         email: 'joao@email.com',
         telefone: '(11) 98765-4321',
         cargo: 'Gerente de Frota',
       });
     }
-  };
+  }
 
-  const salvarPerfil = async (): Promise<void> => {
-    // Validação simples
-    if (!perfil.nome.trim() || !perfil.email.trim()) {
-      Alert.alert('Erro', 'Nome e email são obrigatórios');
+  async function salvarPerfil() {
+    if (!usuario.nome.trim() || !usuario.email.trim()) {
+      Alert.alert('Preencha nome e email');
       return;
     }
-
     try {
-      await AsyncStorage.setItem('@perfil_usuario', JSON.stringify(perfil));
-      setEstaEditando(false);
-      Alert.alert('Sucesso', 'Perfil atualizado com sucesso');
-    } catch (erro) {
-      Alert.alert('Erro', 'Não foi possível salvar os dados do perfil');
+      await AsyncStorage.setItem('@perfil_usuario', JSON.stringify(usuario));
+      setEditando(false);
+      Alert.alert('Perfil salvo!');
+    } catch {
+      Alert.alert('Erro ao salvar perfil');
     }
-  };
+  }
 
-  const alterarCampo = (campo: keyof PerfilUsuario, valor: string): void => {
-    setPerfil(anterior => ({ ...anterior, [campo]: valor }));
-  };
+  function atualizar(campo: keyof Usuario, valor: string) {
+    setUsuario(u => ({ ...u, [campo]: valor }));
+  }
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Perfil do Usuário</Text>
-      
       <ScrollView style={styles.scrollContainer}>
         <View style={styles.profileSection}>
-          {estaEditando ? (
+          {editando ? (
             <>
               <Text style={styles.sectionTitle}>Nome:</Text>
               <TextInput
                 style={styles.input}
-                value={perfil.nome}
-                onChangeText={(valor) => alterarCampo('nome', valor)}
+                value={usuario.nome}
+                onChangeText={v => atualizar('nome', v)}
                 placeholder="Seu nome"
               />
-              
               <Text style={styles.sectionTitle}>Email:</Text>
               <TextInput
                 style={styles.input}
-                value={perfil.email}
-                onChangeText={(valor) => alterarCampo('email', valor)}
+                value={usuario.email}
+                onChangeText={v => atualizar('email', v)}
                 placeholder="Seu email"
                 keyboardType="email-address"
                 autoCapitalize="none"
               />
-              
               <Text style={styles.sectionTitle}>Telefone:</Text>
               <TextInput
                 style={styles.input}
-                value={perfil.telefone}
-                onChangeText={(valor) => alterarCampo('telefone', valor)}
+                value={usuario.telefone}
+                onChangeText={v => atualizar('telefone', v)}
                 placeholder="Seu telefone"
                 keyboardType="phone-pad"
               />
-              
               <Text style={styles.sectionTitle}>Cargo:</Text>
               <TextInput
                 style={styles.input}
-                value={perfil.cargo}
-                onChangeText={(valor) => alterarCampo('cargo', valor)}
+                value={usuario.cargo}
+                onChangeText={v => atualizar('cargo', v)}
                 placeholder="Seu cargo"
               />
-              
               <View style={styles.modalButtons}>
-                <TouchableOpacity 
-                  style={styles.modalButton} 
-                  onPress={salvarPerfil}
-                >
+                <TouchableOpacity style={styles.modalButton} onPress={salvarPerfil}>
                   <Text style={styles.modalButtonText}>Salvar</Text>
                 </TouchableOpacity>
-                
-                <TouchableOpacity 
-                  style={styles.modalButton} 
-                  onPress={() => {
-                    carregarPerfil();
-                    setEstaEditando(false);
-                  }}
-                >
+                <TouchableOpacity style={styles.modalButton} onPress={() => { buscarPerfil(); setEditando(false); }}>
                   <Text style={styles.modalButtonText}>Cancelar</Text>
                 </TouchableOpacity>
               </View>
@@ -264,35 +222,27 @@ export default function TelaUsuario({ navigation }: PropsNavegacao) {
             <>
               <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>Nome:</Text>
-                <Text style={styles.infoValue}>{perfil.nome}</Text>
+                <Text style={styles.infoValue}>{usuario.nome}</Text>
               </View>
-              
               <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>Email:</Text>
-                <Text style={styles.infoValue}>{perfil.email}</Text>
+                <Text style={styles.infoValue}>{usuario.email}</Text>
               </View>
-              
               <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>Telefone:</Text>
-                <Text style={styles.infoValue}>{perfil.telefone}</Text>
+                <Text style={styles.infoValue}>{usuario.telefone}</Text>
               </View>
-              
               <View style={styles.infoRow}>
                 <Text style={styles.infoLabel}>Cargo:</Text>
-                <Text style={styles.infoValue}>{perfil.cargo}</Text>
+                <Text style={styles.infoValue}>{usuario.cargo}</Text>
               </View>
-              
-              <TouchableOpacity 
-                style={[styles.button, styles.editButton]} 
-                onPress={() => setEstaEditando(true)}
-              >
+              <TouchableOpacity style={[styles.button, styles.editButton]} onPress={() => setEditando(true)}>
                 <Text style={styles.editButtonText}>Editar Perfil</Text>
               </TouchableOpacity>
             </>
           )}
         </View>
       </ScrollView>
-      
       <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
         <Text style={styles.buttonText}>Voltar</Text>
       </TouchableOpacity>

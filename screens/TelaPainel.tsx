@@ -2,93 +2,43 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// TODO: melhorar os tipos da navegação
-export default function TelaPainel(props) {
-  // estados
-  const [nome, setNome] = useState('');
-  const [totalMotos, setTotalMotos] = useState(0);
+export default function TelaPainel({ navigation }: { navigation: any }) {
+  const [primeiroNome, setPrimeiroNome] = useState('');
+  const [qtdMotos, setQtdMotos] = useState(0);
   
-  // contador de renderizações para debug
   const [renderCount, setRenderCount] = useState(0);
 
-  // carregar dados
   useEffect(() => {
-    // debug
+    
     setRenderCount(renderCount + 1);
     console.log('Renderização #' + (renderCount + 1));
     
-    // carregar do storage
-    carregarDados();
+    buscarDados();
   }, []);
 
-  // função para carregar os dados do AsyncStorage
-  async function carregarDados() {
-    // nome do usuário
+  async function buscarDados() {
     try {
-      let perfilJson = await AsyncStorage.getItem('@perfil_usuario');
-      
-      if (perfilJson) {
-        console.log('Perfil encontrado!');
-        let perfil = JSON.parse(perfilJson);
-        
-        // só o primeiro nome
-        if (perfil.nome && perfil.nome.includes(' ')) {
-          let partes = perfil.nome.split(' ');
-          setNome(partes[0]);
-        } else {
-          setNome(perfil.nome || '');
-        }
-      } else {
-        console.log('Nenhum perfil encontrado');
+      const perfilSalvo = await AsyncStorage.getItem('@perfil_usuario');
+      if (perfilSalvo) {
+        const perfil = JSON.parse(perfilSalvo);
+        setPrimeiroNome(perfil.nome?.split(' ')[0] || perfil.nome || '');
       }
-    } catch (err) {
-      console.error('Erro ao carregar perfil:', err);
-    }
-    
-    // quantidade de motos
+    } catch {}
     try {
-      let motosJson = await AsyncStorage.getItem('@dados_motos');
-      
-      if (motosJson) {
-        let motos = JSON.parse(motosJson);
-        console.log('Motos carregadas:', motos.length);
-        setTotalMotos(motos.length);
+      const motosSalvas = await AsyncStorage.getItem('@dados_motos');
+      if (motosSalvas) {
+        setQtdMotos(JSON.parse(motosSalvas).length);
       } else {
-        console.log('Nenhuma moto encontrada');
-        setTotalMotos(0);
+        setQtdMotos(0);
       }
-    } catch (err) {
-      console.error('Erro ao carregar motos:', err);
-    }
-  }
-
-  // acessar tela de usuário
-  function irParaTelaUsuario() {
-    props.navigation.navigate('Usuario');
-  }
-  
-  // acessar tela de gestão de motos
-  function irParaTelaGestaoMotos() {
-    console.log('Indo para tela de gestão de motos');
-    props.navigation.navigate('GestaoMotos');
-  }
-  
-  // acessar tela sobre
-  function irParaTelaSobre() {
-    props.navigation.navigate('Sobre');
-  }
-  
-  // fazer logout
-  function fazerLogout() {
-    console.log('Fazendo logout...');
-    props.navigation.replace('Login');
+    } catch {}
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.greeting}>
-          {nome ? `Olá, ${nome}!` : 'Bem-vindo!'}
+          {primeiroNome ? `Olá, ${primeiroNome}!` : 'Bem-vindo!'}
         </Text>
         <Text style={styles.title}>Painel de Controle</Text>
       </View>
@@ -98,7 +48,7 @@ export default function TelaPainel(props) {
         <View style={styles.statsContainer}>
           {/* Card de motos */}
           <View style={styles.statCard}>
-            <Text style={styles.statValue}>{totalMotos}</Text>
+            <Text style={styles.statValue}>{qtdMotos}</Text>
             <Text style={styles.statLabel}>Motos Cadastradas</Text>
           </View>
           
@@ -114,56 +64,59 @@ export default function TelaPainel(props) {
         {/* Botão de Perfil */}
         <TouchableOpacity 
           style={[styles.menuCard, styles.userCard]} 
-          onPress={irParaTelaUsuario}
+          onPress={() => navigation.navigate('Usuario')}
         >
           <View style={styles.iconPlaceholder}>
             <Text style={styles.iconText}>👤</Text>
           </View>
           <View style={styles.menuCardContent}>
             <Text style={styles.menuCardTitle}>Perfil do Usuário</Text>
-            <Text style={styles.menuCardDesc}>Visualize e edite suas informações pessoais</Text>
+            <Text style={styles.menuCardDesc}>Veja e edite seus dados pessoais</Text>
           </View>
         </TouchableOpacity>
         
         {/* Botão de Gestão de Motos */}
         <TouchableOpacity 
           style={[styles.menuCard, styles.crudCard]} 
-          onPress={irParaTelaGestaoMotos}
+          onPress={() => navigation.navigate('GestaoMotos')}
         >
           <View style={styles.iconPlaceholder}>
             <Text style={styles.iconText}>🏍️</Text>
           </View>
           <View style={styles.menuCardContent}>
             <Text style={styles.menuCardTitle}>Gestão de Motos</Text>
-            <Text style={styles.menuCardDesc}>Cadastre, edite e remova motos da frota</Text>
+            <Text style={styles.menuCardDesc}>Cadastre, edite ou remova motos</Text>
           </View>
         </TouchableOpacity>
         
         {/* Botão Sobre */}
         <TouchableOpacity 
           style={[styles.menuCard, styles.aboutCard]} 
-          onPress={irParaTelaSobre}
+          onPress={() => navigation.navigate('Sobre')}
         >
           <View style={styles.iconPlaceholder}>
             <Text style={styles.iconText}>ℹ️</Text>
           </View>
           <View style={styles.menuCardContent}>
             <Text style={styles.menuCardTitle}>Sobre</Text>
-            <Text style={styles.menuCardDesc}>Informações sobre o aplicativo e desenvolvedores</Text>
+            <Text style={styles.menuCardDesc}>Informações do app e equipe</Text>
           </View>
         </TouchableOpacity>
         
         {/* Botão Sair */}
         <TouchableOpacity 
           style={[styles.menuCard, styles.logoutCard]} 
-          onPress={fazerLogout}
+          onPress={async () => {
+            await AsyncStorage.removeItem('@perfil_usuario');
+            navigation.replace('Login');
+          }}
         >
           <View style={styles.iconPlaceholder}>
             <Text style={styles.iconText}>🚪</Text>
           </View>
           <View style={styles.menuCardContent}>
             <Text style={styles.menuCardTitle}>Sair</Text>
-            <Text style={styles.menuCardDesc}>Encerrar a sessão atual</Text>
+            <Text style={styles.menuCardDesc}>Encerrar sessão</Text>
           </View>
         </TouchableOpacity>
       </ScrollView>
@@ -171,8 +124,7 @@ export default function TelaPainel(props) {
   );
 }
 
-// FIXME: melhorar padding nas margens
-// estilos da tela de painel
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

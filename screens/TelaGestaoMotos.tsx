@@ -20,67 +20,54 @@ export default function TelaGestaoMotos({ navigation }: PropsNavegacao) {
   const [modelo, setModelo] = useState('');
   const [placa, setPlaca] = useState('');
   const [idEdicao, setIdEdicao] = useState<number | null>(null);
-  const [estaCarregando, setEstaCarregando] = useState(true);
+  const [carregando, setCarregando] = useState(true);
 
   // Carregar dados do AsyncStorage quando a tela é montada
   useEffect(() => {
-    carregarMotos();
-    console.log("Componente montado, carregando motos...");
+    buscarMotos();
   }, []);
 
   // Salvar dados no AsyncStorage sempre que "motos" mudar
   useEffect(() => {
-    if (!estaCarregando) {
+    if (!carregando) {
       salvarMotos();
-      console.log("Motos atualizadas:", motos.length);
     }
   }, [motos]);
 
-  const carregarMotos = async (): Promise<void> => {
+  async function buscarMotos() {
     try {
-      console.log("Tentando carregar motos do storage");
-      const valorJson = await AsyncStorage.getItem('@dados_motos');
-      
-      if (valorJson != null) {
-        const motosCarregadas = JSON.parse(valorJson);
-        console.log("Motos carregadas:", motosCarregadas.length);
-        setMotos(motosCarregadas);
+      const salvo = await AsyncStorage.getItem('@dados_motos');
+      if (salvo) {
+        setMotos(JSON.parse(salvo));
       } else {
-        console.log("Nenhum dado encontrado, usando dados padrão");
-        // dados de exemplo
         setMotos([
           { id: 1, modelo: 'Honda CG 160', placa: 'ABC-1234' },
           { id: 2, modelo: 'Yamaha Factor', placa: 'XYZ-5678' },
         ]);
       }
-    } catch (erro) {
-      console.error("Erro ao carregar motos:", erro);
-      // Se ocorrer erro, pelo menos inicia com dados padrão
+    } catch {
       setMotos([
         { id: 1, modelo: 'Honda CG 160', placa: 'ABC-1234' },
         { id: 2, modelo: 'Yamaha Factor', placa: 'XYZ-5678' },
       ]);
     } finally {
-      setEstaCarregando(false);
+      setCarregando(false);
     }
-  };
+  }
 
-  const salvarMotos = async (): Promise<void> => {
+  async function salvarMotos() {
     try {
-      const jsonValue = JSON.stringify(motos);
-      await AsyncStorage.setItem('@dados_motos', jsonValue);
-    } catch (erro) {
-      console.error("Erro ao salvar motos:", erro);
+      await AsyncStorage.setItem('@dados_motos', JSON.stringify(motos));
+    } catch {
       Alert.alert('Erro', 'Não foi possível salvar os dados');
     }
-  };
+  }
 
-  const manipularAdicionarOuEditar = (): void => {
-    if (modelo.trim() === "" || placa.trim() === "") {
-      Alert.alert('Erro', 'Por favor, preencha todos os campos');
+  function adicionarOuEditar() {
+    if (!modelo.trim() || !placa.trim()) {
+      Alert.alert('Preencha todos os campos');
       return;
     }
-
     if (idEdicao) {
       setMotos(motos.map(m => m.id === idEdicao ? { ...m, modelo, placa } : m));
       setIdEdicao(null);
@@ -89,25 +76,23 @@ export default function TelaGestaoMotos({ navigation }: PropsNavegacao) {
     }
     setModelo('');
     setPlaca('');
-  };
+  }
 
-  const manipularEdicao = (moto: Moto): void => {
-    console.log("Editando moto:", moto.id);
+  function editar(moto: Moto) {
     setIdEdicao(moto.id);
     setModelo(moto.modelo);
     setPlaca(moto.placa);
-  };
+  }
 
-  const manipularExclusao = (id: number): void => {
+  function excluir(id: number) {
     Alert.alert(
-      'Confirmar exclusão',
-      'Tem certeza que deseja excluir esta moto?',
+      'Excluir moto',
+      'Tem certeza que deseja excluir?',
       [
         { text: 'Cancelar', style: 'cancel' },
         { 
           text: 'Excluir', 
           onPress: () => {
-            console.log("Excluindo moto:", id);
             setMotos(motos.filter(m => m.id !== id));
             if (idEdicao === id) {
               setIdEdicao(null);
@@ -119,14 +104,13 @@ export default function TelaGestaoMotos({ navigation }: PropsNavegacao) {
         },
       ]
     );
-  };
+  }
 
-  const limparCampos = (): void => {
+  function limpar() {
     setModelo('');
     setPlaca('');
     setIdEdicao(null);
-    console.log("Formulário limpo");
-  };
+  }
 
   return (
     <View style={estilos.container}>
@@ -153,13 +137,13 @@ export default function TelaGestaoMotos({ navigation }: PropsNavegacao) {
           <View style={estilos.botoesFormulario}>
             <TouchableOpacity 
               style={[estilos.botao, estilos.botaoSalvar]} 
-              onPress={manipularAdicionarOuEditar}
+              onPress={adicionarOuEditar}
             >
               <Text style={estilos.textoBotao}>{idEdicao ? 'Salvar' : 'Adicionar'}</Text>
             </TouchableOpacity>
             <TouchableOpacity 
               style={[estilos.botao, estilos.botaoLimpar]} 
-              onPress={limparCampos}
+              onPress={limpar}
             >
               <Text style={estilos.textoBotaoLimpar}>Limpar</Text>
             </TouchableOpacity>
@@ -179,10 +163,10 @@ export default function TelaGestaoMotos({ navigation }: PropsNavegacao) {
                 <Text style={estilos.subtituloItem}>{item.placa}</Text>
               </View>
               <View style={estilos.acoes}>
-                <TouchableOpacity style={estilos.botaoEditar} onPress={() => manipularEdicao(item)}>
+                <TouchableOpacity style={estilos.botaoEditar} onPress={() => editar(item)}>
                   <Text style={estilos.textoBotaoEditar}>Editar</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={estilos.botaoExcluir} onPress={() => manipularExclusao(item.id)}>
+                <TouchableOpacity style={estilos.botaoExcluir} onPress={() => excluir(item.id)}>
                   <Text style={estilos.textoBotaoExcluir}>Excluir</Text>
                 </TouchableOpacity>
               </View>
