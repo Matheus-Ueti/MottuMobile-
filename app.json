@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "MottuMobile",
-    "slug": "MottuMobile",
+    "name": "ZoogMobile",
+    "slug": "ZoogMobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

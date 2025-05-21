@@ -66,13 +66,13 @@ export default function TelaLogin({ navigation }: PropsNavegacao) {
   return (
     <View style={estilos.container}>
       <View style={estilos.cabecalho}>
-        <Text style={estilos.titulo}>Mottu</Text>
+        <Text style={estilos.titulo}>Zoog</Text>
         <Text style={estilos.subtitulo}>Sistema de Gestão</Text>
       </View>
       
       <View style={estilos.containerFormulario}>
         <TextInput
-          style={estilos.entrada}
+          style={estilos.input}
           placeholder="Usuário"
           value={usuario}
           onChangeText={(texto) => setUsuario(texto)}
@@ -80,7 +80,7 @@ export default function TelaLogin({ navigation }: PropsNavegacao) {
           autoCapitalize="none"
         />
         <TextInput
-          style={estilos.entrada}
+          style={estilos.input}
           placeholder="Senha"
           value={senha}
           onChangeText={(texto) => setSenha(texto)}
@@ -104,7 +104,7 @@ export default function TelaLogin({ navigation }: PropsNavegacao) {
       </View>
       
       <View style={estilos.rodape}>
-        <Text style={estilos.textoRodape}>© 2023 Mottu - Todos os direitos reservados</Text>
+        <Text style={estilos.textoRodape}>© 2023 Zoog - Todos os direitos reservados</Text>
       </View>
     </View>
   );
@@ -125,7 +125,7 @@ const estilos = StyleSheet.create({
   titulo: {
     fontSize: 40,
     fontWeight: 'bold',
-    color: '#00C853',
+    color: '#8A2BE2',
   },
   subtitulo: {
     fontSize: 16,
@@ -143,17 +143,17 @@ const estilos = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 1,
   },
-  entrada: {
+  input: {
     width: '100%',
     height: 48,
-    borderColor: '#00C853',
+    borderColor: '#8A2BE2',
     borderWidth: 1.5,
     borderRadius: 8,
     paddingHorizontal: 16,
     marginBottom: 16,
     fontSize: 16,
     color: '#222',
-    backgroundColor: '#F8FFF8',
+    backgroundColor: '#F8F5FF',
   },
   containerLembrar: {
     flexDirection: 'row',

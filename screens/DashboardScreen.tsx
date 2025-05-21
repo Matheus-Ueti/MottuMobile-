@@ -113,13 +113,13 @@ export default function DashboardScreen({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#fff',
   },
   header: {
     paddingTop: 48,
     paddingHorizontal: 16,
     paddingBottom: 16,
-    backgroundColor: '#00C853',
+    backgroundColor: '#8A2BE2',
   },
   greeting: {
     fontSize: 16,
@@ -156,12 +156,12 @@ const styles = StyleSheet.create({
   statValue: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#00C853',
+    color: '#8A2BE2',
     marginBottom: 4,
   },
   statLabel: {
     fontSize: 14,
-    color: '#666',
+    color: '#333',
     textAlign: 'center',
   },
   sectionTitle: {
@@ -185,25 +185,25 @@ const styles = StyleSheet.create({
   },
   userCard: {
     borderLeftWidth: 4,
-    borderLeftColor: '#00C853',
+    borderLeftColor: '#8A2BE2',
   },
   crudCard: {
     borderLeftWidth: 4,
-    borderLeftColor: '#2196F3',
+    borderLeftColor: '#8A2BE2',
   },
   aboutCard: {
     borderLeftWidth: 4,
-    borderLeftColor: '#FF9800',
+    borderLeftColor: '#8A2BE2',
   },
   logoutCard: {
     borderLeftWidth: 4,
-    borderLeftColor: '#F44336',
+    borderLeftColor: '#8A2BE2',
   },
   iconPlaceholder: {
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#F8F5FF',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 16,

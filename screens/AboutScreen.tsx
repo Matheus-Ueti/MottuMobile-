@@ -8,10 +8,10 @@ export default function AboutScreen({ navigation }: any) {
       
       <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}>
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Mottu Mobile</Text>
+          <Text style={styles.cardTitle}>Zoog Mobile</Text>
           <Text style={styles.version}>Versão 1.0.0</Text>
           <Text style={styles.description}>
-            Este aplicativo é um protótipo para gestão e mapeamento inteligente de motos nos pátios da Mottu.
+            Este aplicativo é um protótipo para gestão e mapeamento inteligente de motos nos pátios da Zoog.
           </Text>
         </View>
         
@@ -63,7 +63,7 @@ export default function AboutScreen({ navigation }: any) {
           <View style={styles.logoCircle}>
             <Text style={styles.logoText}>M</Text>
           </View>
-          <Text style={styles.copyright}>© 2023 Mottu - Todos os direitos reservados</Text>
+          <Text style={styles.copyright}>© 2023 Zoog - Todos os direitos reservados</Text>
         </View>
       </ScrollView>
       
@@ -77,14 +77,14 @@ export default function AboutScreen({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#fff',
     padding: 16,
     paddingTop: 48,
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#00C853',
+    color: '#8A2BE2',
     marginBottom: 16,
     textAlign: 'center',
   },
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   },
   version: {
     fontSize: 14,
-    color: '#666',
+    color: '#8A2BE2',
     marginBottom: 12,
   },
   description: {
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   },
   bullet: {
     fontSize: 16,
-    color: '#00C853',
+    color: '#8A2BE2',
     marginRight: 8,
     fontWeight: 'bold',
   },
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: 32,
-    backgroundColor: '#00C853',
+    backgroundColor: '#8A2BE2',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 16,
@@ -156,12 +156,12 @@ const styles = StyleSheet.create({
   },
   copyright: {
     fontSize: 12,
-    color: '#999',
+    color: '#333',
   },
   button: {
     width: '100%',
     height: 44,
-    backgroundColor: '#00C853',
+    backgroundColor: '#8A2BE2',
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',

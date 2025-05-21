@@ -1,38 +1,6 @@
-# Mottu Mobile
+# Zoog Mobile
 
-Aplicativo de gestão e mapeamento inteligente de motos para a Mottu, desenvolvido com React Native e Expo.
-
-## Funcionalidades Implementadas
-
-1. **Navegação entre telas (20 pontos)**
-   - Uso da biblioteca React Navigation para gerenciar rotas
-   - 5 rotas navegáveis: Login, Painel, Gestão de Motos, Usuário e Sobre
-   - Nomenclatura de telas e componentes em português
-
-2. **Protótipo visual funcional (30 pontos)**
-   - Layout funcional e coerente com o fluxo de uso
-   - Design moderno com temas consistentes
-   - UI responsiva e amigável
-   - Cores e estilos padronizados
-
-3. **Formulário com manipulação de estado (20 pontos)**
-   - Uso de useState e useEffect para controle dos campos
-   - Formulários reativos com validação
-   - Feedback visual para o usuário (alertas, etc.)
-   - Tipagem forte com TypeScript
-
-4. **Armazenamento local com AsyncStorage (20 pontos)**
-   - Persistência de dados entre sessões
-   - Armazenamento de perfil de usuário
-   - Armazenamento da lista de motos
-   - Opção de "lembrar usuário" no login
-
-5. **Qualidade de código (10 pontos)**
-   - Código organizado e bem estruturado
-   - Padrões de nomenclatura consistentes
-   - Componentes reutilizáveis
-   - Tipagem adequada com TypeScript
-   - Comentários explicativos em português
+Aplicativo de gestão e mapeamento inteligente de motos para a Zoog, desenvolvido com React Native e Expo.
 
 ## Estrutura do Projeto
 

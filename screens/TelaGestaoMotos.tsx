@@ -130,7 +130,7 @@ export default function TelaGestaoMotos({ navigation }: PropsNavegacao) {
 
   return (
     <View style={estilos.container}>
-      <Text style={estilos.titulo}>Gestão de Motos</Text>
+      <Text style={estilos.title}>Gestão de Motos</Text>
       <View style={estilos.cartao}>
         <Text style={estilos.tituloCartao}>{idEdicao ? 'Editar Moto' : 'Adicionar Moto'}</Text>
         <View style={estilos.formulario}>
@@ -207,15 +207,14 @@ export default function TelaGestaoMotos({ navigation }: PropsNavegacao) {
 const estilos = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
-    alignItems: 'center',
+    backgroundColor: '#fff',
     padding: 16,
     paddingTop: 48,
   },
-  titulo: {
+  title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#00C853',
+    color: '#8A2BE2',
     marginBottom: 16,
   },
   cartao: {
@@ -242,14 +241,14 @@ const estilos = StyleSheet.create({
   entrada: {
     width: '100%',
     height: 44,
-    borderColor: '#00C853',
+    borderColor: '#8A2BE2',
     borderWidth: 1.5,
     borderRadius: 8,
     paddingHorizontal: 12,
     marginBottom: 12,
     fontSize: 15,
     color: '#333',
-    backgroundColor: '#F8FFF8',
+    backgroundColor: '#F8F5FF',
   },
   botoesFormulario: {
     flexDirection: 'row',
@@ -265,7 +264,7 @@ const estilos = StyleSheet.create({
     marginBottom: 8,
   },
   botaoSalvar: {
-    backgroundColor: '#00C853',
+    backgroundColor: '#8A2BE2',
     flex: 3,
     marginRight: 8,
   },
@@ -307,10 +306,10 @@ const estilos = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#F8FFF8',
+    backgroundColor: '#F8F5FF',
     borderRadius: 8,
     borderLeftWidth: 4,
-    borderLeftColor: '#00C853',
+    borderLeftColor: '#8A2BE2',
     padding: 12,
     marginBottom: 8,
   },
@@ -335,7 +334,7 @@ const estilos = StyleSheet.create({
     padding: 6,
   },
   textoBotaoEditar: {
-    color: '#00C853',
+    color: '#8A2BE2',
     fontWeight: 'bold',
   },
   textoBotaoExcluir: {
@@ -345,7 +344,7 @@ const estilos = StyleSheet.create({
   botaoVoltar: {
     width: '100%',
     height: 44,
-    backgroundColor: '#00C853',
+    backgroundColor: '#8A2BE2',
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',

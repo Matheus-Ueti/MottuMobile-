@@ -1,18 +1,17 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 
-// tipo de navegação
 type NavProps = {
   navigation: any;
 }
 
 export default function TelaSobre({ navigation }: NavProps) {
-  // volta para a tela anterior
+  
   const voltar = () => {
     navigation.goBack();
   }
   
-  // versão do aplicativo - MUDAR AQUI SE ATUALIZAR
+  // versão do aplicativo - MUDAR AQUI SE ATUALIZAR POR FAVOR
   const versaoApp = "1.0.0";
   
   const getAnoAtual = () => {
@@ -43,10 +42,10 @@ export default function TelaSobre({ navigation }: NavProps) {
       
       <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Mottu Mobile</Text>
+          <Text style={styles.cardTitle}>Zoog Mobile</Text>
           <Text style={styles.version}>Versão {versaoApp}</Text>
           <Text style={styles.desc}>
-            Este aplicativo é um protótipo para gestão e mapeamento inteligente de motos nos pátios da Mottu.
+            Este aplicativo é um protótipo para gestão e mapeamento inteligente de motos nos pátios da Zoog.
           </Text>
         </View>
         
@@ -72,8 +71,8 @@ export default function TelaSobre({ navigation }: NavProps) {
         
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Desenvolvedor</Text>
-          <Text style={styles.devText}>Este aplicativo foi desenvolvido como um projeto para demonstração de habilidades em React Native e gestão de frota para a Mottu.</Text>
-          <Text style={styles.devText}>© {getAnoAtual()} Mottu - Todos os direitos reservados</Text>
+          <Text style={styles.devText}>Este aplicativo foi desenvolvido como um projeto para demonstração de habilidades em React Native e gestão de frota para a Zoog.</Text>
+          <Text style={styles.devText}>© {getAnoAtual()} Zoog - Todos os direitos reservados</Text>
         </View>
       </ScrollView>
       
@@ -88,14 +87,14 @@ export default function TelaSobre({ navigation }: NavProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#fff',
     padding: 16,
     paddingTop: 48,
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#00C853',
+    color: '#8A2BE2',
     marginBottom: 16,
     textAlign: 'center',
   },
@@ -122,12 +121,12 @@ const styles = StyleSheet.create({
   },
   version: {
     fontSize: 14,
-    color: '#00C853',
+    color: '#8A2BE2',
     marginBottom: 12,
   },
   desc: {
     fontSize: 15,
-    color: '#555',
+    color: '#333',
     lineHeight: 22,
   },
   listItem: {
@@ -137,26 +136,26 @@ const styles = StyleSheet.create({
   },
   bullet: {
     fontSize: 16,
-    color: '#00C853',
+    color: '#8A2BE2',
     marginRight: 8,
-    lineHeight: 22,
+    fontWeight: 'bold',
   },
   listText: {
     flex: 1,
     fontSize: 14,
-    color: '#555',
+    color: '#333',
     lineHeight: 22,
   },
   devText: {
     fontSize: 14,
-    color: '#555',
+    color: '#333',
     marginBottom: 12,
     lineHeight: 20,
   },
   backBtn: {
     width: '100%',
     height: 44,
-    backgroundColor: '#00C853',
+    backgroundColor: '#8A2BE2',
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
@@ -165,5 +164,22 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  logoCircle: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    backgroundColor: '#8A2BE2',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 16,
+  },
+  button: {
+    width: '100%',
+    height: 44,
+    backgroundColor: '#8A2BE2',
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 }); 

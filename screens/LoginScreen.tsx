@@ -8,7 +8,7 @@ export default function LoginScreen({ navigation }: any) {
   const [rememberUser, setRememberUser] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Carregar dados salvos quando a tela é montada
+
   useEffect(() => {
     loadSavedUser();
   }, []);
@@ -23,7 +23,7 @@ export default function LoginScreen({ navigation }: any) {
         setRememberUser(true);
       }
     } catch (e) {
-      // Ignora erros de carregamento
+  
     } finally {
       setIsLoading(false);
     }
@@ -56,7 +56,7 @@ export default function LoginScreen({ navigation }: any) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Mottu</Text>
+        <Text style={styles.title}>Zoog</Text>
         <Text style={styles.subtitle}>Sistema de Gestão</Text>
       </View>
       
@@ -82,8 +82,8 @@ export default function LoginScreen({ navigation }: any) {
           <Switch
             value={rememberUser}
             onValueChange={setRememberUser}
-            trackColor={{ false: '#ccc', true: '#a0e1c0' }}
-            thumbColor={rememberUser ? '#00C853' : '#f4f3f4'}
+            trackColor={{ false: '#ccc', true: '#e0c2ff' }}
+            thumbColor={rememberUser ? '#8A2BE2' : '#f4f3f4'}
           />
           <Text style={styles.rememberText}>Lembrar usuário</Text>
         </View>
@@ -94,7 +94,7 @@ export default function LoginScreen({ navigation }: any) {
       </View>
       
       <View style={styles.footer}>
-        <Text style={styles.footerText}>© 2023 Mottu - Todos os direitos reservados</Text>
+        <Text style={styles.footerText}>© 2023 Zoog - Todos os direitos reservados</Text>
       </View>
     </View>
   );
@@ -103,7 +103,7 @@ export default function LoginScreen({ navigation }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 24,
@@ -115,11 +115,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 40,
     fontWeight: 'bold',
-    color: '#00C853',
+    color: '#8A2BE2',
   },
   subtitle: {
     fontSize: 16,
-    color: '#666',
+    color: '#333',
     marginTop: 8,
   },
   formContainer: {
@@ -136,14 +136,14 @@ const styles = StyleSheet.create({
   input: {
     width: '100%',
     height: 48,
-    borderColor: '#00C853',
+    borderColor: '#8A2BE2',
     borderWidth: 1.5,
     borderRadius: 8,
     paddingHorizontal: 16,
     marginBottom: 16,
     fontSize: 16,
-    color: '#222',
-    backgroundColor: '#F8FFF8',
+    color: '#333',
+    backgroundColor: '#F8F5FF',
   },
   rememberContainer: {
     flexDirection: 'row',
@@ -152,13 +152,13 @@ const styles = StyleSheet.create({
   },
   rememberText: {
     marginLeft: 8,
-    color: '#666',
+    color: '#333',
     fontSize: 14,
   },
   button: {
     width: '100%',
     height: 48,
-    backgroundColor: '#00C853',
+    backgroundColor: '#8A2BE2',
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     marginBottom: 16, 
   },
   footerText: {
-    color: '#999',
+    color: '#333',
     fontSize: 12,
   },
 }); 

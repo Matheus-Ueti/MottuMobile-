@@ -2,18 +2,141 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Interface para tipagem das propriedades de navegação
 interface PropsNavegacao {
   navigation: any;
 }
 
-// Interface para tipagem do perfil de usuário
+
 interface PerfilUsuario {
   nome: string;
   email: string;
   telefone: string;
   cargo: string;
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    padding: 16,
+    paddingTop: 48,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#8A2BE2',
+    marginBottom: 24,
+    textAlign: 'center',
+  },
+  scrollContainer: {
+    flex: 1,
+    marginBottom: 16,
+  },
+  profileSection: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 20,
+    marginBottom: 20,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 1,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#8A2BE2',
+    marginBottom: 16,
+  },
+  input: {
+    width: '100%',
+    height: 48,
+    borderColor: '#8A2BE2',
+    borderWidth: 1.5,
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    marginBottom: 16,
+    fontSize: 16,
+    color: '#333',
+    backgroundColor: '#F8F5FF',
+  },
+  button: {
+    width: '100%',
+    height: 48,
+    backgroundColor: '#8A2BE2',
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 8,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  infoRow: {
+    flexDirection: 'row',
+    marginBottom: 12,
+    alignItems: 'center',
+  },
+  infoLabel: {
+    width: 120,
+    fontSize: 14,
+    color: '#333',
+    fontWeight: 'bold',
+  },
+  infoValue: {
+    flex: 1,
+    fontSize: 14,
+    color: '#333',
+  },
+  editButton: {
+    backgroundColor: '#F8F5FF',
+    borderWidth: 1.5,
+    borderColor: '#8A2BE2',
+  },
+  editButtonText: {
+    color: '#8A2BE2',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    padding: 16,
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 24,
+    width: '100%',
+    maxWidth: 400,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#8A2BE2',
+    marginBottom: 16,
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginTop: 16,
+  },
+  modalButton: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 6,
+    marginLeft: 8,
+    backgroundColor: '#8A2BE2',
+  },
+  modalButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: 'bold',
+  }
+});
 
 export default function TelaUsuario({ navigation }: PropsNavegacao) {
   // Estados
@@ -76,24 +199,24 @@ export default function TelaUsuario({ navigation }: PropsNavegacao) {
   };
 
   return (
-    <View style={estilos.container}>
-      <Text style={estilos.titulo}>Perfil do Usuário</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Perfil do Usuário</Text>
       
-      <ScrollView style={estilos.scrollContainer}>
-        <View style={estilos.cartao}>
+      <ScrollView style={styles.scrollContainer}>
+        <View style={styles.profileSection}>
           {estaEditando ? (
             <>
-              <Text style={estilos.labelCampo}>Nome:</Text>
+              <Text style={styles.sectionTitle}>Nome:</Text>
               <TextInput
-                style={estilos.entrada}
+                style={styles.input}
                 value={perfil.nome}
                 onChangeText={(valor) => alterarCampo('nome', valor)}
                 placeholder="Seu nome"
               />
               
-              <Text style={estilos.labelCampo}>Email:</Text>
+              <Text style={styles.sectionTitle}>Email:</Text>
               <TextInput
-                style={estilos.entrada}
+                style={styles.input}
                 value={perfil.email}
                 onChangeText={(valor) => alterarCampo('email', valor)}
                 placeholder="Seu email"
@@ -101,219 +224,78 @@ export default function TelaUsuario({ navigation }: PropsNavegacao) {
                 autoCapitalize="none"
               />
               
-              <Text style={estilos.labelCampo}>Telefone:</Text>
+              <Text style={styles.sectionTitle}>Telefone:</Text>
               <TextInput
-                style={estilos.entrada}
+                style={styles.input}
                 value={perfil.telefone}
                 onChangeText={(valor) => alterarCampo('telefone', valor)}
                 placeholder="Seu telefone"
                 keyboardType="phone-pad"
               />
               
-              <Text style={estilos.labelCampo}>Cargo:</Text>
+              <Text style={styles.sectionTitle}>Cargo:</Text>
               <TextInput
-                style={estilos.entrada}
+                style={styles.input}
                 value={perfil.cargo}
                 onChangeText={(valor) => alterarCampo('cargo', valor)}
                 placeholder="Seu cargo"
               />
               
-              <View style={estilos.linhaBotoes}>
+              <View style={styles.modalButtons}>
                 <TouchableOpacity 
-                  style={[estilos.botao, estilos.botaoSalvar]} 
+                  style={styles.modalButton} 
                   onPress={salvarPerfil}
                 >
-                  <Text style={estilos.textoBotao}>Salvar</Text>
+                  <Text style={styles.modalButtonText}>Salvar</Text>
                 </TouchableOpacity>
                 
                 <TouchableOpacity 
-                  style={[estilos.botao, estilos.botaoCancelar]} 
+                  style={styles.modalButton} 
                   onPress={() => {
-                    carregarPerfil(); // Recarrega os dados originais
+                    carregarPerfil();
                     setEstaEditando(false);
                   }}
                 >
-                  <Text style={estilos.textoBotaoCancelar}>Cancelar</Text>
+                  <Text style={styles.modalButtonText}>Cancelar</Text>
                 </TouchableOpacity>
               </View>
             </>
           ) : (
             <>
-              <View style={estilos.cabecalhoPerfil}>
-                <View style={estilos.avatar}>
-                  <Text style={estilos.textoAvatar}>{perfil.nome.charAt(0)}</Text>
-                </View>
-                <View style={estilos.infoCabecalho}>
-                  <Text style={estilos.nomeUsuario}>{perfil.nome}</Text>
-                  <Text style={estilos.cargoUsuario}>{perfil.cargo}</Text>
-                </View>
+              <View style={styles.infoRow}>
+                <Text style={styles.infoLabel}>Nome:</Text>
+                <Text style={styles.infoValue}>{perfil.nome}</Text>
               </View>
               
-              <View style={estilos.secaoInfo}>
-                <View style={estilos.linhaInfo}>
-                  <Text style={estilos.labelInfo}>Email:</Text>
-                  <Text style={estilos.valorInfo}>{perfil.email}</Text>
-                </View>
-                
-                <View style={estilos.linhaInfo}>
-                  <Text style={estilos.labelInfo}>Telefone:</Text>
-                  <Text style={estilos.valorInfo}>{perfil.telefone}</Text>
-                </View>
+              <View style={styles.infoRow}>
+                <Text style={styles.infoLabel}>Email:</Text>
+                <Text style={styles.infoValue}>{perfil.email}</Text>
+              </View>
+              
+              <View style={styles.infoRow}>
+                <Text style={styles.infoLabel}>Telefone:</Text>
+                <Text style={styles.infoValue}>{perfil.telefone}</Text>
+              </View>
+              
+              <View style={styles.infoRow}>
+                <Text style={styles.infoLabel}>Cargo:</Text>
+                <Text style={styles.infoValue}>{perfil.cargo}</Text>
               </View>
               
               <TouchableOpacity 
-                style={[estilos.botao, estilos.botaoEditar]} 
+                style={[styles.button, styles.editButton]} 
                 onPress={() => setEstaEditando(true)}
               >
-                <Text style={estilos.textoBotao}>Editar Perfil</Text>
+                <Text style={styles.editButtonText}>Editar Perfil</Text>
               </TouchableOpacity>
             </>
           )}
         </View>
       </ScrollView>
       
-      <TouchableOpacity style={estilos.botaoVoltar} onPress={() => navigation.goBack()}>
-        <Text style={estilos.textoBotao}>Voltar</Text>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
+        <Text style={styles.buttonText}>Voltar</Text>
       </TouchableOpacity>
     </View>
   );
-}
-
-const estilos = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f5f5f5',
-    padding: 16,
-    paddingTop: 48,
-  },
-  titulo: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#00C853',
-    marginBottom: 16,
-    textAlign: 'center',
-  },
-  scrollContainer: {
-    flex: 1,
-    marginBottom: 16,
-  },
-  cartao: {
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 16,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 1,
-  },
-  cabecalhoPerfil: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 24,
-  },
-  avatar: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
-    backgroundColor: '#00C853',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 16,
-  },
-  textoAvatar: {
-    color: '#fff',
-    fontSize: 28,
-    fontWeight: 'bold',
-  },
-  infoCabecalho: {
-    flex: 1,
-  },
-  nomeUsuario: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 4,
-  },
-  cargoUsuario: {
-    fontSize: 14,
-    color: '#666',
-  },
-  secaoInfo: {
-    marginBottom: 24,
-  },
-  linhaInfo: {
-    marginBottom: 12,
-  },
-  labelInfo: {
-    fontSize: 14,
-    color: '#666',
-    marginBottom: 4,
-  },
-  valorInfo: {
-    fontSize: 16,
-    color: '#333',
-  },
-  labelCampo: {
-    fontSize: 14,
-    color: '#666',
-    marginBottom: 4,
-    marginTop: 12,
-  },
-  entrada: {
-    width: '100%',
-    height: 44,
-    borderColor: '#00C853',
-    borderWidth: 1.5,
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    fontSize: 15,
-    color: '#333',
-    backgroundColor: '#F8FFF8',
-  },
-  linhaBotoes: {
-    flexDirection: 'row',
-    marginTop: 24,
-  },
-  botao: {
-    flex: 1,
-    height: 44,
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 8,
-  },
-  botaoEditar: {
-    backgroundColor: '#00C853',
-    marginTop: 16,
-  },
-  botaoSalvar: {
-    backgroundColor: '#00C853',
-    marginRight: 8,
-    flex: 3,
-  },
-  botaoCancelar: {
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderColor: '#ccc',
-    flex: 1,
-  },
-  textoBotao: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  textoBotaoCancelar: {
-    color: '#666',
-    fontSize: 16,
-  },
-  botaoVoltar: {
-    width: '100%',
-    height: 44,
-    backgroundColor: '#00C853',
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-}); 
+} 

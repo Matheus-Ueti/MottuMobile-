@@ -85,85 +85,85 @@ export default function TelaPainel(props) {
   }
 
   return (
-    <View style={style.container}>
-      <View style={style.header}>
-        <Text style={style.greetingText}>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.greeting}>
           {nome ? `Olá, ${nome}!` : 'Bem-vindo!'}
         </Text>
-        <Text style={style.headerTitle}>Painel de Controle</Text>
+        <Text style={styles.title}>Painel de Controle</Text>
       </View>
 
-      <ScrollView style={style.scrollArea} showsVerticalScrollIndicator={false}>
+      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* Área de estatísticas */}
-        <View style={style.statsArea}>
+        <View style={styles.statsContainer}>
           {/* Card de motos */}
-          <View style={style.statCard}>
-            <Text style={style.statNumber}>{totalMotos}</Text>
-            <Text style={style.statLabel}>Motos Cadastradas</Text>
+          <View style={styles.statCard}>
+            <Text style={styles.statValue}>{totalMotos}</Text>
+            <Text style={styles.statLabel}>Motos Cadastradas</Text>
           </View>
           
           {/* Card de acessos */}
-          <View style={style.statCard}>
-            <Text style={style.statNumber}>3</Text>
-            <Text style={style.statLabel}>Acessos Recentes</Text>
+          <View style={styles.statCard}>
+            <Text style={styles.statValue}>3</Text>
+            <Text style={styles.statLabel}>Acessos Recentes</Text>
           </View>
         </View>
         
-        <Text style={style.sectionTitle}>Acesso Rápido</Text>
+        <Text style={styles.sectionTitle}>Acesso Rápido</Text>
         
         {/* Botão de Perfil */}
         <TouchableOpacity 
-          style={[style.menuItem, {borderLeftColor: '#00C853', borderLeftWidth: 4}]} 
+          style={[styles.menuCard, styles.userCard]} 
           onPress={irParaTelaUsuario}
         >
-          <View style={style.iconContainer}>
-            <Text style={style.icon}>👤</Text>
+          <View style={styles.iconPlaceholder}>
+            <Text style={styles.iconText}>👤</Text>
           </View>
-          <View style={style.menuTextContainer}>
-            <Text style={style.menuTitle}>Perfil do Usuário</Text>
-            <Text style={style.menuDescription}>Visualize e edite suas informações pessoais</Text>
+          <View style={styles.menuCardContent}>
+            <Text style={styles.menuCardTitle}>Perfil do Usuário</Text>
+            <Text style={styles.menuCardDesc}>Visualize e edite suas informações pessoais</Text>
           </View>
         </TouchableOpacity>
         
         {/* Botão de Gestão de Motos */}
         <TouchableOpacity 
-          style={[style.menuItem, {borderLeftColor: '#2196F3', borderLeftWidth: 4}]} 
+          style={[styles.menuCard, styles.crudCard]} 
           onPress={irParaTelaGestaoMotos}
         >
-          <View style={style.iconContainer}>
-            <Text style={style.icon}>🏍️</Text>
+          <View style={styles.iconPlaceholder}>
+            <Text style={styles.iconText}>🏍️</Text>
           </View>
-          <View style={style.menuTextContainer}>
-            <Text style={style.menuTitle}>Gestão de Motos</Text>
-            <Text style={style.menuDescription}>Cadastre, edite e remova motos da frota</Text>
+          <View style={styles.menuCardContent}>
+            <Text style={styles.menuCardTitle}>Gestão de Motos</Text>
+            <Text style={styles.menuCardDesc}>Cadastre, edite e remova motos da frota</Text>
           </View>
         </TouchableOpacity>
         
         {/* Botão Sobre */}
         <TouchableOpacity 
-          style={[style.menuItem, {borderLeftColor: '#FF9800', borderLeftWidth: 4}]} 
+          style={[styles.menuCard, styles.aboutCard]} 
           onPress={irParaTelaSobre}
         >
-          <View style={style.iconContainer}>
-            <Text style={style.icon}>ℹ️</Text>
+          <View style={styles.iconPlaceholder}>
+            <Text style={styles.iconText}>ℹ️</Text>
           </View>
-          <View style={style.menuTextContainer}>
-            <Text style={style.menuTitle}>Sobre</Text>
-            <Text style={style.menuDescription}>Informações sobre o aplicativo e desenvolvedores</Text>
+          <View style={styles.menuCardContent}>
+            <Text style={styles.menuCardTitle}>Sobre</Text>
+            <Text style={styles.menuCardDesc}>Informações sobre o aplicativo e desenvolvedores</Text>
           </View>
         </TouchableOpacity>
         
         {/* Botão Sair */}
         <TouchableOpacity 
-          style={[style.menuItem, {borderLeftColor: '#F44336', borderLeftWidth: 4}]} 
+          style={[styles.menuCard, styles.logoutCard]} 
           onPress={fazerLogout}
         >
-          <View style={style.iconContainer}>
-            <Text style={style.icon}>🚪</Text>
+          <View style={styles.iconPlaceholder}>
+            <Text style={styles.iconText}>🚪</Text>
           </View>
-          <View style={style.menuTextContainer}>
-            <Text style={style.menuTitle}>Sair</Text>
-            <Text style={style.menuDescription}>Encerrar a sessão atual</Text>
+          <View style={styles.menuCardContent}>
+            <Text style={styles.menuCardTitle}>Sair</Text>
+            <Text style={styles.menuCardDesc}>Encerrar a sessão atual</Text>
           </View>
         </TouchableOpacity>
       </ScrollView>
@@ -173,32 +173,32 @@ export default function TelaPainel(props) {
 
 // FIXME: melhorar padding nas margens
 // estilos da tela de painel
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#fff',
   },
   header: {
     paddingTop: 48,
     paddingHorizontal: 16,
     paddingBottom: 16,
-    backgroundColor: '#00C853',
+    backgroundColor: '#8A2BE2',
   },
-  greetingText: {
+  greeting: {
     fontSize: 16,
     color: 'rgba(255, 255, 255, 0.9)',
     marginBottom: 4,
   },
-  headerTitle: {
+  title: {
     fontSize: 28,
     fontWeight: 'bold',
     color: '#fff',
   },
-  scrollArea: {
+  content: {
     flex: 1,
     paddingHorizontal: 16,
   },
-  statsArea: {
+  statsContainer: {
     flexDirection: 'row',
     marginTop: 16,
     marginBottom: 24,
@@ -216,15 +216,15 @@ const style = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 1,
   },
-  statNumber: {
+  statValue: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#00C853',
+    color: '#8A2BE2',
     marginBottom: 4,
   },
   statLabel: {
     fontSize: 14,
-    color: '#666',
+    color: '#333',
     textAlign: 'center',
   },
   sectionTitle: {
@@ -233,7 +233,7 @@ const style = StyleSheet.create({
     color: '#333',
     marginBottom: 16,
   },
-  menuItem: {
+  menuCard: {
     flexDirection: 'row',
     backgroundColor: '#fff',
     borderRadius: 12,
@@ -246,29 +246,45 @@ const style = StyleSheet.create({
     shadowRadius: 1,
     alignItems: 'center',
   },
-  iconContainer: {
+  userCard: {
+    borderLeftWidth: 4,
+    borderLeftColor: '#8A2BE2',
+  },
+  crudCard: {
+    borderLeftWidth: 4,
+    borderLeftColor: '#8A2BE2',
+  },
+  aboutCard: {
+    borderLeftWidth: 4,
+    borderLeftColor: '#8A2BE2',
+  },
+  logoutCard: {
+    borderLeftWidth: 4,
+    borderLeftColor: '#8A2BE2',
+  },
+  iconPlaceholder: {
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#F8F5FF',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 16,
   },
-  icon: {
+  iconText: {
     fontSize: 20,
   },
-  menuTextContainer: {
+  menuCardContent: {
     flex: 1,
   },
-  menuTitle: {
+  menuCardTitle: {
     fontSize: 16,
     fontWeight: 'bold',
     color: '#333',
     marginBottom: 4,
   },
-  menuDescription: {
+  menuCardDesc: {
     fontSize: 12,
-    color: '#666',
-  },
+    color: '#333',
+  }
 }); 
