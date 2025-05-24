@@ -83,7 +83,7 @@ export default function LoginScreen({ navigation }: { navigation: any }) {
         </TouchableOpacity>
       </View>
       <View style={styles.footer}>
-        <Text style={styles.footerText}>© 2025 Zoog - Todos os direitos reservados</Text>
+        <Text style={styles.footerText}>© 2023 Zoog - Todos os direitos reservados</Text>
       </View>
     </View>
   );
